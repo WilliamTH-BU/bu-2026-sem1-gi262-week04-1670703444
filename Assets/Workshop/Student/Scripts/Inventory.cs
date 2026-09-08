@@ -10,26 +10,50 @@ namespace Solution {
         public void AddItem(string item, int amount)
         {
             // 1. ตรวจสอบว่ามีไอเท็มนี้ในคลังแล้วหรือยัง
-           
+            if (inventory.ContainsKey(item))
+            {
+                inventory[item] += amount;
+            }
+            else
+            {
+                inventory.Add(item, amount);
+            }
 
             Debug.Log("Added " + amount + " " + item + ". Total: " + inventory[item]);
+            PrintInventory();
         }
 
         // ลบไอเท็ม
         public void RemoveItem(string item, int amount)
         {
             //4. ตรวจสอบว่ามีไอเท็มนี้ในคลังหรือไม่
-            
+            if (HasItem(item, amount))
+            {
+                inventory[item] -= amount;
+                if (inventory[item] <= 0)
+                {
+                    inventory.Remove(item);
+                }
+            }
+
         }
         public bool HasItem(string item, int amount)
         {
             //2. ตรวจสอบว่ามีไอเท็มนี้ในคลังหรือไม่ และมีจำนวนเพียงพอหรือไม่
+            if (inventory.ContainsKey(item))
+            {
+                return inventory[item] >= amount;
+            }
             return false;
         }
         // ตรวจสอบจำนวนไอเท็ม
         public int GetItemCount(string item)
         {
             //3. ตรวจสอบว่ามีไอเท็มนี้ในคลังหรือไม่ ถ้ามีให้คืนค่าจำนวนไอเท็มนั้น
+            if (inventory.ContainsKey(item))
+            {
+                return inventory[item];
+            }
             return 0;
         }
 
